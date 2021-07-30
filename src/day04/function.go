@@ -3,6 +3,7 @@ package main
 import "fmt"
 
 /*
+六十一讲
 学习使用函数,如果返回值就只有一个的话,那么()可以省略不写
 func name(v1, v2, ...) (return value) {
 
@@ -27,7 +28,9 @@ func main() {
 	//
 	//fmt.Println(fun1(2, 3, 4, 5, 9, 10))
 	num := 10
-	fun2(&num, 100)
+	//fun2(&num, 100)
+
+	fun3(&num, 200, fun2)
 	fmt.Println(num)
 
 }
@@ -67,4 +70,12 @@ func fun1(args ...int) int {
 func fun2(n1 *int, n2 int) {
 
 	*n1 = n2
+}
+
+/*
+函数作为参数传递  闭包!
+*/
+func fun3(num1 *int, num2 int, funTest func(*int, int)) {
+
+	funTest(num1, num2)
 }
