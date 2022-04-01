@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-//声明结构体,属性名称和函数名称一样,开头大写表示对外公开,否则私有
+// 声明结构体,属性名称和函数名称一样,开头大写表示对外公开,否则私有
 type Teacher struct {
 	Name   string
 	Age    int
