@@ -35,7 +35,3 @@ func TestClient(t *testing.T) {
 
 	fmt.Println(response1.Body)
 }
-
-func Demo() {
-
-}

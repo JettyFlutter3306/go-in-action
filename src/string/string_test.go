@@ -54,7 +54,6 @@ func TestString(t *testing.T) {
 			12.去除字符串两边指定的字符  strings.Trim()
 			13.去除字符串(左边)右边的指定的字符  strings.TrimLeft()  stings.TrimRight()
 			14.判断字符串是否以指定的字符串打头(结尾)  strings.HasPrefix()  strings.HasSuffix()
-			15.
 
 	*/
 	var str = "hello golang  Go语言" //在golang中,汉字是utf-8字符集,一个汉字3个字节
