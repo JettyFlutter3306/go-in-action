@@ -5,7 +5,6 @@ import (
 	"testing"
 )
 
-//第32讲
 func TestPointer(t *testing.T) {
 
 	var age = 18
@@ -21,7 +20,6 @@ func TestPointer(t *testing.T) {
 	fmt.Println(p)
 	fmt.Println("p本身这个存储空间的地址为: ", &p)
 
-	//想获取指针指向的区域的数据
+	// 想获取指针指向的区域的数据
 	fmt.Println("p指向的内存区域的数值为: ", *p)
-
 }
