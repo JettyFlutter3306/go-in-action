@@ -31,7 +31,6 @@ func TestRecover(t *testing.T) {
 }
 
 func TestErr(t *testing.T) {
-
 	err := testErr()
 
 	if err != nil {
