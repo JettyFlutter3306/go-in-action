@@ -94,5 +94,4 @@ func TestStateDate(t *testing.T) {
 
 	var c5 = 'A'
 	fmt.Printf("c5对应的字符是: %c", c5)
-
 }

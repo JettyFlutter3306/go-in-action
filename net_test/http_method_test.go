@@ -44,7 +44,6 @@ func TestHttp(t *testing.T) {
 我们平时通过浏览器访问网页其实就是从网站的服务器接收HTTP数据，
 然后浏览器会按照HTML、CSS等规则将网页渲染展示出来。
 */
-
 func TestArgsGet(t *testing.T) {
 	apiUrl := "http://127.0.0.1:9090/get"
 
