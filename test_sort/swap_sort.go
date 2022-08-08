@@ -14,6 +14,7 @@ func BubbleSort(arr []int) {
 	}
 }
 
+// 快速排序
 func QuickSort(arr []int) {
 	ProcessQuickSort(arr, 0, len(arr)-1)
 }
@@ -23,14 +24,14 @@ func ProcessQuickSort(arr []int, l, r int) {
 		return
 	}
 
-	section := NetherlandsFlag(arr, l, r)
+	section := netherlandsFlag(arr, l, r)
 	ProcessQuickSort(arr, l, section[0]-1)
 	ProcessQuickSort(arr, section[1]+1, r)
 }
 
 // 快速排序的划分辅助函数 假如存在多个与基准值相等的元素需要进行重复计算
 // 返回基准值的索引
-func Partition(arr []int, l, r int) int {
+func partition(arr []int, l, r int) int {
 	if l > r {
 		return -1
 	} else if l == r {
@@ -57,7 +58,7 @@ func Partition(arr []int, l, r int) int {
 }
 
 // 将数组分成三个部分返回中间基准值的区间数组，也就是荷兰国旗问题
-func NetherlandsFlag(arr []int, l, r int) []int {
+func netherlandsFlag(arr []int, l, r int) []int {
 	if l > r {
 		return []int{-1, -1}
 	} else if l == r {

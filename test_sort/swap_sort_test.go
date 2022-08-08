@@ -18,13 +18,13 @@ func TestQuickSort(t *testing.T) {
 }
 
 func TestPartition(t *testing.T) {
-	index := Partition(arr, 0, len(arr)-1)
+	index := partition(arr, 0, len(arr)-1)
 	fmt.Println(arr)
 	fmt.Println(index)
 }
 
 func TestNetherlandsFlag(t *testing.T) {
-	section := NetherlandsFlag(arr, 0, len(arr)-1)
+	section := netherlandsFlag(arr, 0, len(arr)-1)
 	fmt.Println(arr)
 	fmt.Println(section)
 }
