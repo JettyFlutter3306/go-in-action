@@ -11,3 +11,12 @@ func TestIsPalindrome(t *testing.T) {
 	fmt.Println(isPalindrome(x))
 	fmt.Println(isPalindrome(y))
 }
+
+func TestReverse(t *testing.T) {
+	x := 123
+	fmt.Println(reverse(x))
+	x = -123
+	fmt.Println(reverse(x))
+	x = 120
+	fmt.Println(reverse(x))
+}
