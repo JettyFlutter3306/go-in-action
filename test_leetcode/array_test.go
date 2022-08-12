@@ -1,4 +1,4 @@
-package test_algorithm
+package test_leetcode
 
 import (
 	"fmt"
