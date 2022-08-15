@@ -22,7 +22,7 @@ func merge(arr []int, l, m, r int) {
 	p1 := l
 	p2 := m + 1
 
-	for p1 <= m && p2 <= r {
+	for ; p1 <= m && p2 <= r; i++ {
 		if arr[p1] <= arr[p2] {
 			helper[i] = arr[p1]
 			p1++
@@ -30,8 +30,6 @@ func merge(arr []int, l, m, r int) {
 			helper[i] = arr[p2]
 			p2++
 		}
-
-		i++
 	}
 
 	// 要么p1越界了,要么p2越界了,开始拷贝剩下的数据到helper数组里面,两个for只会发生一个
