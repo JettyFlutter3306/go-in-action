@@ -96,10 +96,21 @@ func TestStateDate(t *testing.T) {
 	fmt.Printf("c5对应的字符是: %c", c5)
 }
 
+func filter(arr []int, predicate func(int) bool) []int {
+	var ans []int
+	for _, v := range arr {
+		if predicate(v) {
+			ans = append(ans, v)
+		}
+	}
+	return ans
+}
+
 func TestType(t *testing.T) {
-	arr := []int{12, 13}
-	fmt.Println(arr)
-	arr1 := append(arr, 123)
-	fmt.Println(arr1)
-	fmt.Println(arr)
+	arr := []int{1, 2, 3, 4, 5, 6}
+	// 保留偶数
+	ans := filter(arr, func(v int) bool {
+		return v%2 == 0
+	})
+	fmt.Println(ans)
 }

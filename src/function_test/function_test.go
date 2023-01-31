@@ -77,6 +77,5 @@ func fun2(n1 *int, n2 int) {
 函数作为参数传递  闭包!
 */
 func fun3(num1 *int, num2 int, funTest func(*int, int)) {
-
 	funTest(num1, num2)
 }
