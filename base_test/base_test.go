@@ -24,25 +24,25 @@ var (
 	定义在函数中的变量是局部变量
 */
 func TestStateDate(t *testing.T) {
-	//第一种变量使用的方式
+	// 第一种变量使用的方式
 	var num int = 18
 	fmt.Println(num)
 
-	//第二种,指定变量类型但是没有赋值
+	// 第二种,指定变量类型但是没有赋值
 	var num1 int
-	fmt.Println(num1) //默认是0
+	fmt.Println(num1) // 默认是0
 
-	//第三种,自动类型推断
+	// 第三种,自动类型推断
 	var num3 = 10
 	fmt.Println(num3)
 
-	//第四种,省略var关键字 使用  :=  符号赋值
+	// 第四种,省略var关键字 使用  :=  符号赋值
 	num4 := num3
 	fmt.Println(num4)
 
 	fmt.Println("------------------------------------------------------")
 
-	//声明多个变量
+	// 声明多个变量
 	var n1, n2, n3 int
 	fmt.Println(n1)
 	fmt.Println(n2)
@@ -81,17 +81,25 @@ func TestStateDate(t *testing.T) {
 		UTF-8是Unicode的一种编码方案
 	*/
 	var c1 byte = 'a'
-	fmt.Println(c1) //97
+	fmt.Println(c1) // 97
 
 	var c2 byte = '6'
-	fmt.Println(c2) //54
+	fmt.Println(c2) // 54
 
 	var c3 byte = '('
-	fmt.Println(c3) //40
+	fmt.Println(c3) // 40
 
 	var c4 = '中'
-	fmt.Println(c4) //对应的是Unicode编码表
+	fmt.Println(c4) // 对应的是Unicode编码表
 
 	var c5 = 'A'
 	fmt.Printf("c5对应的字符是: %c", c5)
+}
+
+func TestType(t *testing.T) {
+	arr := []int{12, 13}
+	fmt.Println(arr)
+	arr1 := append(arr, 123)
+	fmt.Println(arr1)
+	fmt.Println(arr)
 }
