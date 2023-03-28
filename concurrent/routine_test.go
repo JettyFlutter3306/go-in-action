@@ -17,3 +17,7 @@ func TestGoroutineNum(t *testing.T) {
 func TestGoroutinePool(t *testing.T) {
 	GoroutinePool()
 }
+
+func TestGoroutineSchedule(t *testing.T) {
+	GoroutineSchedule()
+}

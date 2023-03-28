@@ -97,5 +97,28 @@ func GoroutinePool() {
 			log.Fatal(err)
 		}
 	}
+}
 
+func GoroutineSchedule() {
+	wg.Add(2)
+	printOdd := func() {
+		defer wg.Done()
+		for i := 1; i < 10; i += 2 {
+			fmt.Println(i)
+			// 让出执行权
+			runtime.Gosched()
+		}
+	}
+
+	printEven := func() {
+		defer wg.Done()
+		for i := 0; i < 10; i += 2 {
+			fmt.Println(i)
+			runtime.Gosched()
+		}
+	}
+
+	go printOdd()
+	go printEven()
+	wg.Wait()
 }
