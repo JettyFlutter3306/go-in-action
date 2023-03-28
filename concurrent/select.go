@@ -353,7 +353,5 @@ func SelectAll() {
 		}
 		fmt.Println("Content: ", content)
 	}()
-
 	wg.Wait()
-
 }
