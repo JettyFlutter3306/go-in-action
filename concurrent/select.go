@@ -345,7 +345,7 @@ func SelectAll() {
 				}
 				// 判定finished，说明全部已经处理完毕了
 				if finished {
-					println("all queriers finished. Content if complete.")
+					println("all queriers finished. Content is complete.")
 					close(ch)
 					break FLAG
 				}
