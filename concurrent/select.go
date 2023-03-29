@@ -3,6 +3,8 @@ package concurrent
 import (
 	"fmt"
 	"math/rand"
+	"os"
+	"os/signal"
 	"sync"
 	"time"
 )
@@ -387,4 +389,23 @@ func SelectChannelCloseSignal() {
 		}
 	}()
 	wg.Wait()
+}
+
+func SelectSignal() {
+	go func() {
+		for {
+			fmt.Println(time.Now().Format(".15.04.05.000"))
+			time.Sleep(time.Millisecond * 300)
+		}
+	}()
+
+	// 监控系统的中断信号interrupt
+	chSignal := make(chan os.Signal, 1)
+	signal.Notify(chSignal, os.Interrupt)
+	// 监控channel
+	select {
+	case <-chSignal:
+		fmt.Println("received os signal: Interrupt.")
+
+	}
 }

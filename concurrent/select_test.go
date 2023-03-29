@@ -36,3 +36,7 @@ func TestSelectAll(t *testing.T) {
 func TestSelectChannelCloseSignal(t *testing.T) {
 	SelectChannelCloseSignal()
 }
+
+func TestSelectSignal(t *testing.T) {
+	SelectSignal()
+}
