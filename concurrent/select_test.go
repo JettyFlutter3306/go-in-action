@@ -40,3 +40,11 @@ func TestSelectChannelCloseSignal(t *testing.T) {
 func TestSelectSignal(t *testing.T) {
 	SelectSignal()
 }
+
+func TestContextCancel(t *testing.T) {
+	ContextCancel()
+}
+
+func TestContextCancelTime(t *testing.T) {
+	ContextCancelTime()
+}

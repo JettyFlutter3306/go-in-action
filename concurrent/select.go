@@ -1,10 +1,12 @@
 package concurrent
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
 	"os"
 	"os/signal"
+	"strings"
 	"sync"
 	"time"
 )
@@ -406,6 +408,76 @@ func SelectSignal() {
 	select {
 	case <-chSignal:
 		fmt.Println("received os signal: Interrupt.")
+	}
+}
 
+type IContextKey string
+
+func ContextCancel() {
+	wg := sync.WaitGroup{}
+	// 创建cancelContext
+	ctx, cancel := context.WithCancel(context.Background())
+
+	// 启动goroutine，携带cancelCtx
+	wg.Add(4)
+	for i := 0; i < 4; i++ {
+		// 启动协程携带ctx
+		go func(c context.Context, n int) {
+			defer wg.Done()
+			for {
+				select {
+				// 等待接收c.Done
+				case <-c.Done():
+					return
+				default:
+					fmt.Println(strings.Repeat(" ", n), n)
+					time.Sleep(time.Millisecond * 300)
+				}
+			}
+		}(ctx, i)
+	}
+
+	// 主动取消cancel
+	select {
+	case <-time.NewTimer(time.Second * 3).C:
+		cancel()
+	}
+
+	select {
+	case <-ctx.Done():
+		fmt.Println("cancel")
+	}
+
+	wg.Wait()
+}
+
+func ContextCancelTime() {
+	// 创建cancelContext
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*1)
+	// ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(time.Second * 2))
+
+	// 启动goroutine，携带cancelCtx
+	for i := 0; i < 4; i++ {
+		// 启动协程携带ctx
+		go func(c context.Context, n int) {
+			for {
+				select {
+				// 等待接收c.Done
+				case <-c.Done():
+					return
+				default:
+					fmt.Println(strings.Repeat(" ", n), n)
+					time.Sleep(time.Millisecond * 300)
+				}
+			}
+		}(ctx, i)
+	}
+
+	select {
+	case <-time.NewTimer(time.Second * 4).C:
+		cancel()
+		fmt.Println("call cancel()")
+	case <-ctx.Done():
+		fmt.Println("main cancel")
 	}
 }
