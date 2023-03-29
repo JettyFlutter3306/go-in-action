@@ -481,3 +481,50 @@ func ContextCancelTime() {
 		fmt.Println("main cancel")
 	}
 }
+
+func ContextCancelDeep() {
+	// 创建层级关系的cancelCtx
+	// ctx1, _ := context.WithCancel(context.Background())
+	ctx1, _ := context.WithTimeout(context.Background(), time.Second*2)
+	ctx2, _ := context.WithCancel(ctx1)
+	ctx3, _ := context.WithCancel(ctx1)
+	ctx4, _ := context.WithCancel(ctx2)
+	wg := sync.WaitGroup{}
+
+	// 使用goroutine来接收ctx.Done
+	wg.Add(4)
+	go func(c context.Context) {
+		defer wg.Done()
+		select {
+		case <-c.Done():
+			fmt.Println("context1 cancelled")
+		}
+	}(ctx1)
+
+	go func(c context.Context) {
+		defer wg.Done()
+		select {
+		case <-c.Done():
+			fmt.Println("context2 cancelled")
+		}
+	}(ctx2)
+
+	go func(c context.Context) {
+		defer wg.Done()
+		select {
+		case <-c.Done():
+			fmt.Println("context3 cancelled")
+		}
+	}(ctx3)
+
+	go func(c context.Context) {
+		defer wg.Done()
+		select {
+		case <-c.Done():
+			fmt.Println("context4 cancelled")
+		}
+	}(ctx4)
+
+	// cancel()
+	wg.Wait()
+}

@@ -48,3 +48,7 @@ func TestContextCancel(t *testing.T) {
 func TestContextCancelTime(t *testing.T) {
 	ContextCancelTime()
 }
+
+func TestContextCancelDeep(t *testing.T) {
+	ContextCancelDeep()
+}
