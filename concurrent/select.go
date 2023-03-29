@@ -355,3 +355,36 @@ func SelectAll() {
 	}()
 	wg.Wait()
 }
+
+func SelectChannelCloseSignal() {
+	wg := sync.WaitGroup{}
+	// 定义无缓冲channel
+	ch := make(chan struct{})
+
+	// 用来close管道
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		time.Sleep(time.Second * 2)
+		fmt.Println("Emit the signal, close(ch)")
+		close(ch)
+	}()
+
+	// 接收ch，表示接受信号
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		for {
+			select {
+			case <-ch:
+				fmt.Println("收到信号, <-ch")
+				return
+			default:
+				// 正常的业务逻辑
+				fmt.Println("业务逻辑处理中...")
+				time.Sleep(time.Millisecond * 300)
+			}
+		}
+	}()
+	wg.Wait()
+}

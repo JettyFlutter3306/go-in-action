@@ -32,3 +32,7 @@ func TestSelectRace(t *testing.T) {
 func TestSelectAll(t *testing.T) {
 	SelectAll()
 }
+
+func TestSelectChannelCloseSignal(t *testing.T) {
+	SelectChannelCloseSignal()
+}
