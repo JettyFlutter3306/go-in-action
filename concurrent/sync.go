@@ -1,8 +1,11 @@
 package concurrent
 
 import (
+	"bytes"
 	"fmt"
+	"math/rand"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -203,4 +206,120 @@ func SyncMapMethod() {
 	})
 
 	m.Delete(4)
+}
+
+func SyncPool() {
+	// 原子计数器
+	var counter int32 = 0
+
+	// 定义元素的Newer，创建器
+	elFactory := func() any {
+		atomic.AddInt32(&counter, 1)
+		return new(bytes.Buffer)
+	}
+
+	// Pool初始化
+	// pool := sync.Pool{
+	// 	New: elFactory,
+	// }
+
+	// 并发申请和交回元素
+	workerNum := 1024 * 1024
+	wg := sync.WaitGroup{}
+	wg.Add(workerNum)
+	for i := 0; i < workerNum; i++ {
+		go func() {
+			defer wg.Done()
+			// 申请元素，通常需要断言为特定类型
+			// buffer := pool.Get().(*bytes.Buffer)
+			buffer := elFactory().(*bytes.Buffer)
+			// defer pool.Put(buffer)
+			// 使用元素
+			_ = buffer.String()
+		}()
+	}
+
+	wg.Wait()
+	fmt.Println("number is : ", counter)
+}
+
+// sync.Once 只执行一次
+func SyncOnce() {
+	// 初始化config变量
+	config := make(map[string]string)
+
+	// 初始化sync.Once
+	var once sync.Once
+
+	// 加载配置函数
+	loadConfig := func() {
+		// 利用once.Do来执行
+		once.Do(func() {
+			config = map[string]string{
+				"varInt": fmt.Sprintf("%d", rand.Int31()),
+			}
+			fmt.Println("config loaded.")
+		})
+	}
+
+	// 模拟多个goroutine，多次调用加载配置
+	// 测试加载配置操作，执行了几次
+	workers := 10
+	wg := sync.WaitGroup{}
+	wg.Add(workers)
+	for i := 0; i < workers; i++ {
+		go func() {
+			defer wg.Done()
+			loadConfig()
+			// 使用配置
+			_ = config
+		}()
+	}
+
+	wg.Wait()
+}
+
+func SyncCond() {
+	var wg sync.WaitGroup
+	var data []int
+	dataLen := 1024 * 1024
+
+	// 创建sync.Cond
+	condition := sync.NewCond(&sync.Mutex{})
+
+	// 结束数据的goroutine
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		condition.L.Lock()
+		defer condition.L.Unlock()
+		for i := 0; i < dataLen; i++ {
+			data = append(data, i*i)
+		}
+		time.Sleep(time.Second * 2)
+
+		// 广播，可选的需要锁定
+		condition.Broadcast()
+		fmt.Println("condition broadcast")
+	}()
+
+	// 处理数据的goroutine
+	const workers = 8
+	wg.Add(workers)
+	for i := 0; i < workers; i++ {
+		go func() {
+			defer wg.Done()
+			// 在数据接收完之前等待
+			condition.L.Lock()
+			// if len(data) < dataLen {
+			// 	condition.Wait()
+			// }
+			for len(data) < dataLen {
+				condition.Wait()
+			}
+			fmt.Println("处理数据, 数据长度: ", len(data))
+			condition.L.Unlock()
+		}()
+	}
+	wg.Wait()
 }

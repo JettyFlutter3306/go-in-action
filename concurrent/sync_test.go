@@ -33,3 +33,15 @@ func TestSyncMap(t *testing.T) {
 func TestSyncMapMethod(t *testing.T) {
 	SyncMapMethod()
 }
+
+func TestSyncPool(t *testing.T) {
+	SyncPool()
+}
+
+func TestSyncOnce(t *testing.T) {
+	SyncOnce()
+}
+
+func TestSyncCond(t *testing.T) {
+	SyncCond()
+}
