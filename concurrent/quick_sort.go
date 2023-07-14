@@ -8,17 +8,27 @@ func QuickSortConcurrent(arr []int) {
 	}
 	wg := &sync.WaitGroup{}
 	wg.Add(1)
-	go quickSortConcurrent(arr, 0, len(arr)-1, wg)
+	go quickSortConcurrent(arr, 0, len(arr)-1, wg, 1)
 	wg.Wait()
 }
 
-func quickSortConcurrent(arr []int, l, r int, wg *sync.WaitGroup) {
-	defer wg.Done()
+const maxDeep = 9
+
+func quickSortConcurrent(arr []int, l, r int, wg *sync.WaitGroup, dp int) {
+	if dp <= maxDeep+1 {
+		defer wg.Done()
+	}
+
 	if l < r {
 		mid := partition(arr, l, r)
-		wg.Add(2)
-		go quickSortConcurrent(arr, l, mid-1, wg)
-		go quickSortConcurrent(arr, mid+1, r, wg)
+		if dp <= maxDeep {
+			wg.Add(2)
+			go quickSortConcurrent(arr, l, mid-1, wg, dp+1)
+			go quickSortConcurrent(arr, mid+1, r, wg, dp+1)
+		} else {
+			quickSortConcurrent(arr, l, mid-1, wg, dp+1)
+			quickSortConcurrent(arr, mid+1, r, wg, dp+1)
+		}
 	}
 }
 

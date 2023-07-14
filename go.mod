@@ -1,4 +1,4 @@
-module github.com/code-art.org/go-in-action
+module github.com/code-art/go-in-action
 
 go 1.18
 
